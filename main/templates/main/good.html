@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <style>
+        span{
+            color: white;
+        }
+    </style>
+    <title>{{good.brand}} {{good.name}}</title>
+</head>
+<body>
+    {% include 'main/navbar.html' %}
+    <h1 class="m-3">{{good.brand}} {{good.name}}</h1>
+    <input type="button" class="btn btn-outline-light m-3" onclick="history.back();" value="Пред. страница"/>
+    <ul class="list-group m-3">
+        <li class="list-group-item">
+            Наличие: <span>{{good.amount}}</span>
+        </li>
+        <li class="list-group-item">
+            Цена: <span>{{good.price}}p</span>
+        </li>
+        <li class="list-group-item">
+            Маржинальность: <span>{{good.margin}}p</span>
+        </li>
+        <li class="list-group-item">
+            Розничная цена: <span>{{rozn}}p</span>
+        </li>
+        {% if good.description %}
+        <li class="list-group-item">
+            Описание: <span>{{good.description}}</span>
+        </li>
+        {%endif%}
+        {% if pod %}
+        <li class="list-group-item">
+            АКБ: <span>{% if good.battery %}
+                В комплекте
+                {% else %}
+                Нет
+                {%endif%}
+            </span>
+        </li>
+        {%endif%}
+        <li class="list-group-item">
+            ID: <span>{{good.id}}</span>
+        </li>
+    </ul>    
+    <a  class="btn btn-outline-light mt-1 mx-3" 
+    {%if type == 'Liquid'%} 
+        href='{% url "changeLiquid" good.id %}' 
+    {% elif type == 'Pod'%} 
+        href='{% url "changePod" good.id %}'
+    {% elif type == 'Single'%} 
+        href='{% url "changeSingle" good.id %}'
+    {% elif type == 'Evaporator'%} 
+        href='{% url "changeEvaporator" good.id %}'
+    {% endif %}> 
+    Изменить</a>    
+</body>
+</html>
